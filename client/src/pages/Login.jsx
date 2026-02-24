@@ -84,7 +84,7 @@ const Login = () => {
                     
                     <button 
                         type="submit"
-                        className="bg-basket-orange hover:bg-orange-700 text-white font-bold py-2 px-4 rounded w-full transition-colors mb-4"
+                        className="bg-basket-orange hover:bg-[#E85D00] text-black shadow-[0_6px_0px_0px_#8B2E00] hover:shadow-[0_0_25px_rgba(255,107,0,0.8)] font-bold py-2 px-4 rounded w-full transition-colors mb-4"
                     >
                         {isLogin ? 'Entrar' : 'Registrarse'}
                     </button>

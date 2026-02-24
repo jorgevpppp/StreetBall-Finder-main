@@ -8,8 +8,6 @@ export default {
     extend: {
       colors: {
         'basket-orange': '#FF6B00',
-        'court-green': '#2D6A4F',
-        'court-blue': '#1B4965',
       }
     },
   },

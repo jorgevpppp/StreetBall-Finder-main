@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import MapComponent from '../components/MapComponent';
 import { getAllCourts, getActiveCheckins, doCheckin } from '../services/courtService';
 import { getAllEvents, createEvent, joinEvent, leaveEvent, deleteEvent } from '../services/eventService';
@@ -8,6 +8,8 @@ import { getCurrentUser, logout } from '../services/authService';
 
 const Home = () => {
     const navigate = useNavigate();
+    const { view } = useParams();
+
     const [courts, setCourts] = useState([]);
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,12 +17,31 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [checkins, setCheckins] = useState([]);
     const [user, setUser] = useState(null);
-    const [currentView, setCurrentView] = useState('home'); // 'home', 'map', 'events'
+
+    // 👇 Vista controlada por la URL
+    const [currentView, setCurrentView] = useState(view || 'home'); // 'home', 'map', 'events'
+
+    // 👇 ESTE ES EL ARREGLO IMPORTANTE
+    useEffect(() => {
+        if (view) {
+            setCurrentView(view);
+        } else {
+            setCurrentView('home');
+        }
+    }, [view]);
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [showCreateEventModal, setShowCreateEventModal] = useState(false);
     const [joinCounts, setJoinCounts] = useState({});
-    const [newEventData, setNewEventData] = useState({ title: '', description: '', date: '', type: 'pickup', court_id: '', max_participants: 10 });
-
+    const [newEventData, setNewEventData] = useState({ 
+        title: '', 
+        description: '', 
+        date: '', 
+        type: 'pickup', 
+        court_id: '', 
+        max_participants: 10 
+    });
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
